@@ -1,0 +1,27 @@
+.legend-color {
+  display: inline-block;
+  width: 30px;
+  height: 15px;
+  margin-right: 5px;
+}
+.chartBox {
+  width: 488px;
+  height: 279px;
+  background: white;
+}
+
+@media (max-width:510px){
+  .chartBox {
+    width: 350px;
+    height: 279px;
+    background: white;
+  }
+}
+
+@media (max-width:510px){
+  .chartBox {
+    width: 267px;
+    height: 259px;
+    background: white;
+  }
+}
