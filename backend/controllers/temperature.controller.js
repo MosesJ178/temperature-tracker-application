@@ -19,7 +19,7 @@ const postTemperatureData = async (req, res) => {
             createdAt: { $gte: startOfDay, $lte: endOfDay }
         }).sort({ createdAt: 1 });
 
-        if (documents.length >= 5) {
+        if (documents.length >= 8) {
             await Temperature.findByIdAndDelete({ _id: documents[0]._id });
             const { _id } = await Temperature.create({ temperatureDetails: req.body.storeTemperature });
             console.log(_id);
