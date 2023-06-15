@@ -11,7 +11,7 @@ const PaginateTemperatureDetails = () => {
   useEffect(() => {
     const fetchAllPastTemperature = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/');
+        const response = await axios.get('https://temperature-tracker-app.onrender.com/');
         setPastRecords(response.data.temperatureDetails);
       } catch (err) {
         alert(err);

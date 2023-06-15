@@ -17,7 +17,7 @@ const getTemperatureCoordinate = async (coord) => {
                 "description": response.data.weather[0].description
             });
         }
-        const response = await axios.post('http://localhost:5000/',{storeTemperature});
+        const response = await axios.post('https://temperature-tracker-app.onrender.com/',{storeTemperature});
         return storeTemperature;
     }
     catch (err) {
