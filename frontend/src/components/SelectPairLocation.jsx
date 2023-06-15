@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import Select from 'react-select';
 import { cities } from '../assets/data';
-import TemperatureChart from './TemperatureChart';
 import TostifyContainer from '../middleware/tostifyContainer';
 import { toast } from 'react-toastify';
+import GraphSection from './GraphSection';
+import CitySelect from './CitySelect';
 
 const SelectPairLocation = ({ handleCompareGraph, temperatureDetails }) => {
     const [firstCity, setFirstCity] = useState(null);
@@ -38,7 +38,6 @@ const SelectPairLocation = ({ handleCompareGraph, temperatureDetails }) => {
 
     const handleCompare = () => {
         if (firstCity && secondCity) {
-            console.log(temperatureDetails);
             const filteredCities = temperatureDetails.filter((detail) => detail.city === firstCity.value || detail.city === secondCity.value)
             setPairTemperature(filteredCities);
         } else {
@@ -53,32 +52,15 @@ const SelectPairLocation = ({ handleCompareGraph, temperatureDetails }) => {
         <div className='mb-10'>
             <TostifyContainer />
             <div className='flex px-2 justify-between'>
-                <Select
-                    className='md:w-[20rem] w-[80%]'
-                    value={firstCity}
-                    onChange={handleFirstCityChange}
-                    options={firstDropdownOptions}
-                />
-                <Select
-                    className='md:w-[20rem] w-[80%]'
-                    value={secondCity}
-                    onChange={handleSecondCityChange}
-                    options={secondDropdownOptions}
-                />
+                <CitySelect value={firstCity} onChange={handleFirstCityChange} options={firstDropdownOptions} />
+                <CitySelect value={secondCity} onChange={handleSecondCityChange} options={secondDropdownOptions} />
             </div>
             <button onClick={handleCompare} className='bg-[#2dd4bf] hover:bg-emerald-600 rounded-sm text-md relative top-5 left-1/2 -translate-x-1/2 text-md px-2 py-1'>Compare</button>
             {
-                pairTemperature.length > 0 && <div className={`flex mt-20 lg:flex-row flex-col`}>
-                    <div className={`mb-10 w-full`}>
-                        <p className='font-bold text-xl text-center text-blue-500 underline'>Present Data</p>
-                        <TemperatureChart present={true} temperatureDetails={pairTemperature} />
-                    </div>
-                    {
-                        <div className='w-full mb-10'>
-                            <p className='font-bold text-xl text-center text-green-500 underline'>Future Data</p>
-                            <TemperatureChart present={false} temperatureDetails={pairTemperature} />
-                        </div>
-                    }
+                pairTemperature.length > 0 &&
+                <div className={`flex mt-20 lg:flex-row flex-col`}>
+                    <GraphSection present={true} temperatureDetails={pairTemperature} />
+                    <GraphSection present={false} temperatureDetails={pairTemperature} />
                 </div>
             }
         </div>

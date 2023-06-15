@@ -17,13 +17,11 @@ const getTemperatureCoordinate = async (coord) => {
                 "description": response.data.weather[0].description
             });
         }
-        console.log(storeTemperature,"fresh data");
-        storeTemperature.forEach((test) => console.log(test.currentTemperature));
         const response = await axios.post('http://localhost:5000/',{storeTemperature});
         return storeTemperature;
     }
     catch (err) {
-        console.log("er");
+        alert(err);
     }
 }
 

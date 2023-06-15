@@ -14,7 +14,7 @@ const PaginateTemperatureDetails = () => {
         const response = await axios.get('http://localhost:5000/');
         setPastRecords(response.data.temperatureDetails);
       } catch (err) {
-        console.log(err);
+        alert(err);
       }
     }
     fetchAllPastTemperature();

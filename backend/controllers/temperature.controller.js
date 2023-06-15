@@ -10,7 +10,6 @@ const getTemperatureData = async (req, res) => {
 }
 
 const postTemperatureData = async (req, res) => {
-    req.body.storeTemperature.forEach((test) => console.log(test.currentTemperature));
     try {
         const currentDate = new Date(); 
         const startOfDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 0, 0, 0); // Set the time to 00:00:00
@@ -21,14 +20,13 @@ const postTemperatureData = async (req, res) => {
 
         if (documents.length >= 8) {
             await Temperature.findByIdAndDelete({ _id: documents[0]._id });
-            const { _id } = await Temperature.create({ temperatureDetails: req.body.storeTemperature });
-            console.log(_id);
+            await Temperature.create({ temperatureDetails: req.body.storeTemperature });
           } else {
-            const freshDataAdded = await Temperature.create({ temperatureDetails: req.body.storeTemperature });
+            await Temperature.create({ temperatureDetails: req.body.storeTemperature });
           }
         res.json({ name: "hello" });
     } catch (error) {
-        console.log("Error storing temperature data:", error);
+        res.status(400).json({"Error storing temperature data": error})
     }
 }
 
