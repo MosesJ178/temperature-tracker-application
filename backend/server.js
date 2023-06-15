@@ -1,7 +1,10 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
+import dotenv from "dotenv";
 import temperatureRoutes from "./routes/temperature.route.js"
+
+dotenv.config();
 
 const app = express();
 app.use(cors({
@@ -9,7 +12,7 @@ app.use(cors({
 }));
 
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
+    res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
 });
@@ -21,7 +24,7 @@ app.use('/', temperatureRoutes);
 
 const connectMongoDB = async () => {
     try {
-        await mongoose.connect('mongodb://127.0.0.1:27017/temperaturetracker');
+        await mongoose.connect(process.env.MONGO_DB_URL);
         console.log("connected to DB");
     } catch (err) {
         console.log("err while connecting to DB");
@@ -31,7 +34,7 @@ const connectMongoDB = async () => {
 connectMongoDB()
     .then(() => {
         app.listen(5000, () => {
-            console.log("server is running on port 5000")
+            console.log(`server is running on port ${process.env.PORT_NO}`)
         });
     })
     .catch((err) => {
